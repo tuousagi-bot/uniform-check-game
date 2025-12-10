@@ -1,0 +1,10 @@
+[build]
+  publish = "build/web"
+  command = "echo 'Using pre-built files from GitHub Actions'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cross-Origin-Resource-Policy = "same-origin"

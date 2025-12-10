@@ -10,11 +10,6 @@ env:
   PROJECT_PATH: "."
   EXPORT_NAME: "uniformcheck"
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   build-web:
     runs-on: ubuntu-latest
@@ -41,6 +36,11 @@ jobs:
           mkdir -p build/web
           godot --headless --export-release "Web" build/web/index.html
 
+      - name: Copy headers file for Netlify
+        run: |
+          cp _headers build/web/_headers || true
+          cp netlify.toml build/web/ || true
+
       - name: Create PWA manifest
         run: |
           cat > build/web/manifest.json << 'EOF'
@@ -63,21 +63,19 @@ jobs:
           }
           EOF
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: web-build
           path: build/web
+          retention-days: 30
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build-web
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3
+        with:
+          publish-dir: './build/web'
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        if: env.NETLIFY_AUTH_TOKEN != '' && env.NETLIFY_SITE_ID != ''
