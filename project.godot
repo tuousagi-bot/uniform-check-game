@@ -20,12 +20,12 @@ config/icon="res://icon.svg"
 window/size/viewport_width=800
 window/size/viewport_height=600
 
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-textures/vram_compression/import_etc2_astc=true
-
 [gui]
 
 theme/default_font="res://NotoSansJP.ttf"
 theme/default_font_size=18
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

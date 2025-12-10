@@ -1,6 +1,5 @@
 # Godot-specific ignores
 .godot/
-*.import
 
 # OS-specific
 .DS_Store
