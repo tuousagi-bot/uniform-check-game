@@ -21,7 +21,7 @@ func _ready():
 	_load_api_key()
 
 func _load_api_key():
-	# .envファイルまたは設定から読み込み
+	# .envファイルから読み込み（デスクトップ版用）
 	var env_file = FileAccess.open("res://.env", FileAccess.READ)
 	if env_file:
 		while not env_file.eof_reached():
@@ -31,8 +31,13 @@ func _load_api_key():
 				break
 		env_file.close()
 	
+	# Web版ではファイルが読めないのでエラーにしない
 	if api_key.is_empty():
-		push_error("APIキーが見つかりません")
+		print("APIキーが設定されていません。set_api_key()で設定してください。")
+
+func set_api_key(key: String) -> void:
+	api_key = key
+	print("APIキーが設定されました")
 
 func set_system_prompt(prompt: String) -> void:
 	system_prompt = prompt

@@ -72,8 +72,42 @@ func _ready():
 	check_status = CheckStatus.new()
 	loading_label.visible = false
 	
-	# ゲーム開始
-	_show_intro()
+	# ゲーム開始（APIキーチェック付き）
+	_check_api_key_and_start()
+
+func _check_api_key_and_start():
+	# APIキーが空の場合、入力ダイアログを表示
+	if api.api_key.is_empty():
+		_show_api_key_dialog()
+	else:
+		_show_intro()
+
+func _show_api_key_dialog():
+	var dialog = AcceptDialog.new()
+	dialog.title = "APIキー設定"
+	dialog.dialog_text = "AIのべりすとのAPIキーを入力してください："
+	
+	var line_edit = LineEdit.new()
+	line_edit.placeholder_text = "APIキーを入力..."
+	line_edit.secret = true  # パスワード表示
+	dialog.add_child(line_edit)
+	
+	dialog.confirmed.connect(func():
+		if not line_edit.text.is_empty():
+			api.set_api_key(line_edit.text)
+			_show_intro()
+		else:
+			# 空ならエラー表示して再度ダイアログ
+			text_display.text = "APIキーが入力されていません。\nページを再読み込みしてください。"
+		dialog.queue_free()
+	)
+	dialog.canceled.connect(func():
+		text_display.text = "APIキーが必要です。\nページを再読み込みしてAPIキーを入力してください。"
+		dialog.queue_free()
+	)
+	
+	add_child(dialog)
+	dialog.popup_centered()
 
 func _show_intro():
 	current_phase = GamePhase.INTRO
