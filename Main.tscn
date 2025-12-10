@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3vq8y5c6r8e1"]
+[gd_scene load_steps=3 format=3 uid="uid://c3vq8y5c6r8e1"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_main"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="2_theme"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_theme")
 script = ExtResource("1_main")
 
 [node name="ColorRect" type="ColorRect" parent="."]
