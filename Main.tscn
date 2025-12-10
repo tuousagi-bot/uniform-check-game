@@ -1,0 +1,182 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3vq8y5c6r8e1"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_main"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.12, 0.15, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 24
+text = "制服チェックミニゲーム"
+horizontal_alignment = 1
+
+[node name="TextPanel" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/TextPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "ゲームを読み込み中..."
+wrap_mode = 1
+
+[node name="StatusPanel" type="Panel" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/StatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = -10.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="StatusTitle" type="Label" parent="MarginContainer/VBoxContainer/StatusPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+text = "【確認事項】"
+
+[node name="UpperLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/StatusPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "上半身：[color=gray]未確認[/color]"
+fit_content = true
+
+[node name="LowerLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/StatusPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "下半身：[color=gray]未確認[/color]"
+fit_content = true
+
+[node name="BelongingsLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/StatusPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "持ち物：[color=gray]未確認[/color]"
+fit_content = true
+
+[node name="GenitalsLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/StatusPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "女性器：[color=gray]未確認[/color]"
+fit_content = true
+
+[node name="SelectButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NextButton" type="Button" parent="MarginContainer/VBoxContainer/SelectButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "次の生徒へ"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer/SelectButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "設定追加"
+
+[node name="RefreshButton" type="Button" parent="MarginContainer/VBoxContainer/SelectButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "確認更新"
+
+[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RetryButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "リトライ"
+
+[node name="UndoButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "取り消し"
+
+[node name="SyncButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "履歴反映"
+
+[node name="InputArea" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/InputArea"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "発言を入力..."
+
+[node name="SpeakButton" type="Button" parent="MarginContainer/VBoxContainer/InputArea"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+text = "発言する"
+
+[node name="LoadingLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.5, 1)
+text = "AI応答を生成中..."
+horizontal_alignment = 1

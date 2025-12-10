@@ -1,0 +1,56 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+env:
+  GODOT_VERSION: "4.3"
+  PROJECT_PATH: "."
+  EXPORT_NAME: "uniformcheck"
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+          include-templates: true
+
+      - name: Import project
+        run: |
+          godot --headless --import
+          sleep 5
+
+      - name: Export iOS (unsigned)
+        run: |
+          mkdir -p build/ios
+          godot --headless --export-debug "iOS" build/ios/${{ env.EXPORT_NAME }}.ipa || true
+          # Fallback: Export as Xcode project if direct IPA export fails
+          if [ ! -f "build/ios/${{ env.EXPORT_NAME }}.ipa" ]; then
+            godot --headless --export-pack "iOS" build/ios/${{ env.EXPORT_NAME }}.pck || true
+          fi
+
+      - name: List build outputs
+        run: |
+          echo "=== Build outputs ==="
+          ls -la build/ios/ || echo "No build directory"
+          find . -name "*.ipa" -o -name "*.xcodeproj" 2>/dev/null || echo "No iOS files found"
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: |
+            build/ios/
+          retention-days: 7
+          if-no-files-found: warn

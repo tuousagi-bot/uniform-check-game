@@ -1,0 +1,16 @@
+# Godot-specific ignores
+.godot/
+*.import
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Build outputs
+build/
+*.ipa
+*.pck
+*.zip
+
+# Environment files with secrets
+.env
