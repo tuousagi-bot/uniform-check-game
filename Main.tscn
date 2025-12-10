@@ -161,6 +161,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "履歴反映"
 
+[node name="ContinueButton" type="Button" parent="MarginContainer/VBoxContainer/ActionButtons"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "続ける"
+
 [node name="InputArea" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10

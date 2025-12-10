@@ -209,3 +209,10 @@ func generate_refresh_prompt(student: StudentData, conversation_history: String)
 	prompt += "# ロールプレー\n"
 	prompt += "%s「" % student.student_name
 	return prompt
+
+func generate_continue_prompt(student: StudentData, last_response: String) -> String:
+	# 途中で止まった出力を続けるためのプロンプト
+	var prompt = "[システム：前回の応答が途中で途切れました。「%s先生はどうしますか？」で終わるまで続きを出力してください]\n" % teacher_name
+	prompt += "[#アシスタント]\n"
+	prompt += last_response.strip_edges()
+	return prompt

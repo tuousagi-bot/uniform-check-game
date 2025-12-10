@@ -1,13 +1,13 @@
 [gd_resource type="Theme" load_steps=2 format=3]
 
-[ext_resource type="FontFile" path="res://NotoSansJP.ttf" id="1_font"]
+[ext_resource type="FontFile" path="res://MPLUS1p-Bold.ttf" id="1_font"]
 
 [resource]
 default_font = ExtResource("1_font")
-default_font_size = 18
+default_font_size = 20
 
-Button/font_sizes/font_size = 16
-Label/font_sizes/font_size = 18
-LineEdit/font_sizes/font_size = 16
-TextEdit/font_sizes/font_size = 18
-RichTextLabel/font_sizes/normal_font_size = 15
+Button/font_sizes/font_size = 18
+Label/font_sizes/font_size = 20
+LineEdit/font_sizes/font_size = 18
+TextEdit/font_sizes/font_size = 20
+RichTextLabel/font_sizes/normal_font_size = 16

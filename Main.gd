@@ -17,8 +17,11 @@ enum GamePhase { INTRO, SCENE_A, SCENE_B }
 @onready var retry_button: Button = $MarginContainer/VBoxContainer/ActionButtons/RetryButton
 @onready var undo_button: Button = $MarginContainer/VBoxContainer/ActionButtons/UndoButton
 @onready var sync_button: Button = $MarginContainer/VBoxContainer/ActionButtons/SyncButton
+@onready var continue_button: Button = $MarginContainer/VBoxContainer/ActionButtons/ContinueButton
 @onready var loading_label: Label = $MarginContainer/VBoxContainer/LoadingLabel
 @onready var notification_label: Label = $NotificationLabel
+
+var last_ai_response: String = ""  # 最後のAI応答（続ける用）
 
 var api: AINovelAPI
 var prompt_generator: PromptGenerator
@@ -66,6 +69,7 @@ func _ready():
 	retry_button.pressed.connect(_on_retry_pressed)
 	undo_button.pressed.connect(_on_undo_pressed)
 	sync_button.pressed.connect(_on_sync_pressed)
+	continue_button.pressed.connect(_on_continue_pressed)
 	input_field.text_submitted.connect(_on_input_submitted)
 	
 	# 初期状態
@@ -170,6 +174,9 @@ func _process_player_speech(speech: String):
 
 func _on_api_response(response: String):
 	_set_loading(false)
+	
+	# 最後のAI応答を保存（続ける用）
+	last_ai_response = response
 	
 	# 先生のセリフ（改行後に「カナタ先生「」）が含まれているかチェック
 	# 「カナタ先生！」などの呼びかけは除外
@@ -620,6 +627,25 @@ func _on_refresh_pressed():
 	
 	_set_loading(true)
 	var prompt = prompt_generator.generate_refresh_prompt(current_student, conversation_history)
+	api.generate_text(prompt, 600)
+
+func _on_continue_pressed():
+	# 途中で止まった出力を続ける
+	if current_student == null or current_student.student_name.is_empty():
+		text_display.text += "\n\n※ まず生徒を呼んでください"
+		return
+	
+	if last_ai_response.is_empty():
+		text_display.text += "\n\n※ 続ける応答がありません"
+		return
+	
+	# 「先生はどうしますか？」が含まれているかチェック
+	if teacher_name + "先生はどうしますか" in last_ai_response:
+		text_display.text += "\n\n※ 応答は完了しています"
+		return
+	
+	_set_loading(true)
+	var prompt = prompt_generator.generate_continue_prompt(current_student, last_ai_response)
 	api.generate_text(prompt, 600)
 
 func _on_retry_pressed():
