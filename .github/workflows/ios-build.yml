@@ -34,10 +34,10 @@ jobs:
       - name: Export iOS (unsigned)
         run: |
           mkdir -p build/ios
-          godot --headless --export-debug "iOS" build/ios/${{ env.EXPORT_NAME }}.ipa || true
+          godot --headless --export-debug "制服チェック" build/ios/${{ env.EXPORT_NAME }}.ipa || true
           # Fallback: Export as Xcode project if direct IPA export fails
           if [ ! -f "build/ios/${{ env.EXPORT_NAME }}.ipa" ]; then
-            godot --headless --export-pack "iOS" build/ios/${{ env.EXPORT_NAME }}.pck || true
+            godot --headless --export-pack "制服チェック" build/ios/${{ env.EXPORT_NAME }}.pck || true
           fi
 
       - name: List build outputs
